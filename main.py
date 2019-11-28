@@ -1,15 +1,33 @@
 from SentenceSelector import select_sentences
-text="""Mahatma Gandhi is well known as the “Father of the Nation or Bapu” because of his greatest contributions towards the independence of our country. He was the one who believed in the non-violence and unity of the people and brought spirituality in the Indian politics. He worked hard for the removal of the untouchability in the Indian society, upliftment of the backward classes in India, raised voice to develop villages for social development, inspired Indian people to use swadeshi goods and other social issues. He brought common people in front to participate in the national movement and inspired them to fight for their true freedom.
+from nltk import word_tokenize, pos_tag, ne_chunk
+from nltk import Tree
+import nltk
+from textblob import TextBlob
 
-He was one of the persons who converted people’s dream of independence into truth a day through his noble ideals and supreme sacrifices. He is still remembered between us for his great works and major virtues such as non-violence, truth, love and fraternity. He was not born as great but he made himself great through his hard struggles and works. He was highly influenced by the life of the King Harischandra from the play titled as Raja Harischandra. After his schooling, he completed his law degree from England and began his career as a lawyer. He faced many difficulties in his life but continued walking as a great leader.
+text="""World War II thus far, has been the deadliest and bloodiest war to date. More than 38 million people died by the end of the war, many of them innocent civilians. It was also the most destructive war in our current history. The fighting raged on in many parts of the world, with the brunt of it being in Europe and Japan. More than 50 nations took part in this war, which changed the world forever. For Americans, World War II had a clear-cut purpose; they were fighting to defeat tyranny. Most of Europe had been conquered by Nazi Germany, which was under the evil control of Adolf Hitler. The war in Europe began with Germany’s unprecedented invasion of Poland in 1939. It seemed that wherever the Nazi army went, they came down with a vengeance on the Jews of that area. They also went after anyone that didnt fit in to their idea of the Master Race, Aryans."""
 
-He started many mass movements like Non-cooperation movement in 1920, civil disobedience movement in 1930 and finally the Quit India Movement in 1942 all through the way of independence of India. After lots of struggles and works, independence of India was granted finally by the British Government. He was a very simple person who worked to remove the colour barrier and caste barrier. He also worked hard for removing the untouchability in the Indian society and named untouchables as “Harijan” means the people of God.
+summary=select_sentences(text,2)
 
-He was a great social reformer and Indian freedom fighter who died a day after completing his aim of life. He inspired Indian people for the manual labour and said that arrange all the resource ownself for living a simple life and becoming self-dependent. He started weaving cotton clothes through the use of Charakha in order to avoid the use of videshi goods and promote the use of Swadeshi goods among Indians.
+NP = "NP: { <NNP><NNP>|<NNP>|<CD> }"
+#NP = "NP: { <JJ><NN>|<JJ><NNP>|<NN><NN>|<NN>|<NNP><NNP>|<NNP>|<CD> }"
+chunker = nltk.RegexpParser(NP)
 
-He was a strong supporter of the agriculture and motivated people to do agriculture works. He was a spiritual man who brought spirituality to the Indian politics. He died in 1948 on 30th of January and his body was cremated at Raj Ghat, New Delhi. 30th of January is celebrated every year as the Martyr Day in India in order to pay homage to him.
+for i in summary:
+    print(i)
+    result = chunker.parse(pos_tag(word_tokenize(i)))
+    list_NP=[]
+    for subtree in result.subtrees(filter=lambda t: t.label() == 'NP'):
+        for temp in subtree.leaves():
+            list_NP.append(temp)
 
-"""
-summary=select_sentences(text,20)
-print(len(summary))
-print(summary)
+    fillup=""
+    for t in result.leaves():
+        if(t in list_NP):
+            fillup+=(" ____ ")
+            continue
+
+        fillup+=t[0]
+        fillup+=" "
+
+    print(fillup)
+    result.draw()
