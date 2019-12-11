@@ -90,7 +90,10 @@ def textrank(sentences, top_n, stop_words=None):
     ranked_sentence_indexes = [item[0] for item in sorted(enumerate(sentence_ranks), key=lambda item: -item[1])]
     selected_sentences = sorted(ranked_sentence_indexes[:top_n])
     summary = itemgetter(*selected_sentences)(sentences)
-    return list(summary)
+    summary = list(summary)
+    for index, line in enumerate(summary):
+        summary[index] = line.replace("”","").replace("“","").replace(",", "").replace("&", "and").replace("'", "").replace("\"", "").replace("’","").replace("‘","")
+    return summary
  
 def select_sentences(text,num):
     sentences = sent_tokenize(text)
