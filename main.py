@@ -8,7 +8,7 @@ text="""World War II thus far, has been the deadliest and bloodiest war to date.
 
 summary=select_sentences(text,2)
 
-NP = "NP: { <NNP><NNP>|<NNP>|<CD> }"
+NP = "NP: { <NNP>*|<CD> }"
 #NP = "NP: { <JJ><NN>|<JJ><NNP>|<NN><NN>|<NN>|<NNP><NNP>|<NNP>|<CD> }"
 chunker = nltk.RegexpParser(NP)
 
@@ -17,17 +17,17 @@ for i in summary:
     result = chunker.parse(pos_tag(word_tokenize(i)))
     list_NP=[]
     for subtree in result.subtrees(filter=lambda t: t.label() == 'NP'):
+        str=""
         for temp in subtree.leaves():
-            list_NP.append(temp)
+            if(str!=""):
+                str+=" "
+            str+=temp[0]
+        list_NP.append(str)
 
-    fillup=""
-    for t in result.leaves():
-        if(t in list_NP):
-            fillup+=(" ____ ")
-            continue
-
-        fillup+=t[0]
-        fillup+=" "
+    print(list_NP)
+    
+    for gaps in list_NP:
+        i.replace
 
     print(fillup)
-    result.draw()
+    #result.draw()
