@@ -5,7 +5,7 @@
 * [Clone](https://github.com/akashvermaofskt/AQG.git) this repo in your local machine.
 * [Install](https://blog.ruanbekker.com/blog/2018/11/27/python-flask-tutorial-series-create-a-hello-world-app-p1/) python3. 
 * cd ⁨`AQG`
-* setup [virtual environment](https://blog.ruanbekker.com/blog/2018/12/09/python-flask-tutorial-series-setup-a-python-virtual-environment-p2/) in it.
+* setup [virtual environment](https://docs.python.org/3/library/venv.html) in it.
 * Install all required packages mentioned in `requirement.txt`.
 
 ## How to run
