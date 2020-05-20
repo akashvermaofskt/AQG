@@ -1,4 +1,4 @@
-# Automatic fill in the blanks with answers generator
+# Automatic fill in the blanks
 
 ## How to set up the project environemnt
 
