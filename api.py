@@ -11,28 +11,25 @@ CORS(app) # CORS (Cross-Origin Resource Sharing) is a standard for accessing web
 
 @app.route('/summary', methods = ['POST'])
 def generateSummary():
-	data = request.json['Input']
+	print(request)
+	data = request.get_json()
 	text = data['Text']
-	required_lines = data['Lines']
+	required_lines = int(data['Lines'])
 	summary = select_sentences(text, required_lines)
 	Summary = []
 	for it in summary:
 		Summary.append(it)
 	return {
-			"Output":{
-				"Summary": Summary
-			}
+			"Summary": Summary
 		}	
 
 @app.route('/answer_list', methods = ['POST'])
 def generateQA():
-	data = request.json['Input']
+	data = request.get_json()
 	summary = []
 	final_qa_list = []
 	for it in data['Summary']:
 		summary.append(it)
-	for it in summary:
-		print(it)
 	#NP = "NP: { <NN>+|<CD> }"
 	NP = "NP: { <JJ><NN>|<JJ><NNP>|<NN><NN>|<NN>|<NNP><NNP>|<NNP>|<CD> }"
 	chunker = nltk.RegexpParser(NP)
@@ -56,10 +53,10 @@ def generateQA():
 	        cur_qa['Original_Sentence'] = i
 	        cur_qa['Question'] = q
 	        cur_qa['Answer'] = gaps
-	        print("Original Sentence: {}".format(i))
-	        print("Question: {}".format(q))
-	        print("Answer: {}".format(gaps))
-	        print()
+	        # print("Original Sentence: {}".format(i))
+	        # print("Question: {}".format(q))
+	        # print("Answer: {}".format(gaps))
+	        # print()
 	        final_qa_list.append(cur_qa)
 	        count += 1
 	    #result.draw()
