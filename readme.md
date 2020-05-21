@@ -18,7 +18,7 @@
 
 #### To Generate Summary
 
-* Hit following API http://0.0.0.0:5000/summary i.e `GET`
+* Hit following API http://127.0.0.1:5000/ummary i.e `GET`
 
 ##### Body
 
@@ -55,7 +55,7 @@
 
  #### To generate Fill in the blanks
 
-* Hit following API http://0.0.0.0:5000/answer_list i.e `GET`
+* Hit following API http://127.0.0.1:5000/answer_list i.e `GET`
 
 ##### Body
 

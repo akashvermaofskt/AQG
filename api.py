@@ -9,7 +9,7 @@ from flask_cors import CORS
 app = Flask(__name__) # Flask object created
 CORS(app) # CORS (Cross-Origin Resource Sharing) is a standard for accessing web resources on different domains.
 
-@app.route('/summary', methods = ['GET'])
+@app.route('/summary', methods = ['POST'])
 def generateSummary():
 	data = request.json['Input']
 	text = data['Text']
@@ -24,7 +24,7 @@ def generateSummary():
 			}
 		}	
 
-@app.route('/answer_list', methods = ['GET'])
+@app.route('/answer_list', methods = ['POST'])
 def generateQA():
 	data = request.json['Input']
 	summary = []
@@ -75,4 +75,4 @@ def hello_world():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='0.0.0.0')
+    app.run()
